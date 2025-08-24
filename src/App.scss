@@ -6,11 +6,19 @@ $fa-font-path: "~font-awesome/fonts";
 
 $input-focus-box-shadow: var(--pgn-elevation-form-input-base); // hack to get upgrade to paragon 4.0.0 to work
 
+// Import Chalix brand token overrides (must come before component styles that rely on variables)
+@import "../brand-chalix/paragon/_variables.scss";
+@import "../brand-chalix/paragon/_overrides.scss";
+
 @import "~@edx/frontend-component-header/dist/index";
 @import "~@edx/frontend-component-footer/dist/_footer";
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap');
+
+// Import Chalix course card styles
+@import "./containers/CourseCard/components/ChalixCourseCard/index.scss";
+@import "./containers/CoursesPanel/CourseList/ChalixCourseList.scss";
 
 * {
   font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif !important;

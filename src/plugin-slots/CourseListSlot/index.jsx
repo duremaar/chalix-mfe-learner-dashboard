@@ -2,6 +2,7 @@ import React from 'react';
 
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
 import { CourseList, courseListDataShape } from 'containers/CoursesPanel/CourseList';
+import ChalixCourseList from 'containers/CoursesPanel/CourseList/ChalixCourseList';
 
 export const CourseListSlot = ({ courseListData }) => (
   <PluginSlot
@@ -9,7 +10,7 @@ export const CourseListSlot = ({ courseListData }) => (
     idAliases={['course_list_slot']}
     pluginProps={{ courseListData }}
   >
-    <CourseList courseListData={courseListData} />
+    <ChalixCourseList courseListData={courseListData} />
   </PluginSlot>
 );
 
