@@ -2,13 +2,43 @@
 @use "@openedx/paragon/styles/css/core/custom-media-breakpoints" as paragonCustomMediaBreakpoints;
 
 $fa-font-path: "~font-awesome/fonts";
+// Define all required Bootstrap/Paragon variables before any imports
+$component-active-bg: #007bff !default;
+$component-active-color: #fff !default;
+$component-active-border-color: #007bff !default;
+$border-radius: 0.25rem !default;
+$border-color: #dee2e6 !default;
+$text-muted: #6c757d !default;
+$body-bg: #fff !default;
+$body-color: #212529 !default;
+$rounded-pill: 50rem !default;
+$btn-border-radius: $border-radius !default;
+$btn-border-radius-sm: 0.2rem !default;
+$btn-border-radius-lg: 0.3rem !default;
+$input-border-radius: $border-radius !default;
+$input-border-radius-sm: 0.2rem !default;
+$input-border-radius-lg: 0.3rem !default;
+$card-border-radius: $border-radius !default;
+$modal-content-border-radius: $border-radius !default;
+$dropdown-border-radius: $border-radius !default;
+$alert-border-radius: $border-radius !default;
+$badge-border-radius: $border-radius !default;
+$progress-border-radius: $border-radius !default;
+$list-group-border-radius: $border-radius !default;
+$navbar-brand-font-size: 1.25rem !default;
+$navbar-nav-link-padding-x: 0.5rem !default;
+$navbar-toggler-border-radius: $btn-border-radius !default;
+$enable-rounded: true !default;
+$enable-shadows: false !default;
+$enable-gradients: false !default;
+$enable-transitions: true !default;
+$enable-hover-media-query: false !default;
+$enable-grid-classes: true !default;
+$enable-print-styles: true !default;
+
 @import "~font-awesome/scss/font-awesome";
 
 $input-focus-box-shadow: var(--pgn-elevation-form-input-base); // hack to get upgrade to paragon 4.0.0 to work
-
-// Import Chalix brand token overrides (must come before component styles that rely on variables)
-@import "../brand-chalix/paragon/_variables.scss";
-@import "../brand-chalix/paragon/_overrides.scss";
 
 @import "~@edx/frontend-component-header/dist/index";
 @import "~@edx/frontend-component-footer/dist/_footer";
