@@ -1,0 +1,28 @@
+.chalix-footer {
+    background-color: #3563c1;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+
+    .chalix-footer-container {
+        max-width: 1440px;
+        width: 100%;
+        padding: 0 42px;
+    }
+
+    .footer-content {
+        text-align: center;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.5px;
+
+        p {
+            margin: 0;
+        }
+    }
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
 import {
   Badge,
   Card,
@@ -17,6 +18,11 @@ export const whiteFontWrapper = (node) => (<span className="text-white">{node}</
 
 export const ProgramCard = ({ data }) => {
   const { formatMessage } = useIntl();
+  const config = getConfig();
+  
+  // Use platform logo as fallback when program doesn't have a banner image
+  const bannerImgSrc = data.bannerImgSrc || config.LOGO_URL || '/static/chalix_theme/images/logo.svg';
+  
   const numCoursesMessage = formatMessage(
     messages.courses,
     { numCourses: data.numberOfCourses },
@@ -31,8 +37,8 @@ export const ProgramCard = ({ data }) => {
     >
       <Card.ImageCap
         className="program-card-banner"
-        src={data.bannerImgSrc}
-        srcAlt={formatMessage(messages.bannerAlt)}
+        src={bannerImgSrc}
+        srcAlt={data.bannerImgSrc ? formatMessage(messages.bannerAlt) : `${config.SITE_NAME || 'Chalix'} Logo`}
         logoSrc={data.logoImgSrc}
         logoAlt={formatMessage(messages.logoAlt, { provider: data.provider })}
       />

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
 
 import { Badge } from '@openedx/paragon';
 
@@ -20,6 +21,11 @@ export const CourseCardImage = ({ cardId, orientation }) => {
   const { isVerified } = reduxHooks.useCardEnrollmentData(cardId);
   const { disableCourseTitle } = useActionDisabledState(cardId);
   const handleImageClicked = reduxHooks.useTrackCourseEvent(courseImageClicked, cardId, homeUrl);
+  
+  // Use platform logo as fallback when course doesn't have an image
+  const config = getConfig();
+  const imageSrc = bannerImgSrc || config.LOGO_URL || '/static/chalix_theme/images/logo.svg';
+  
   const wrapperClassName = `pgn__card-wrapper-image-cap d-inline-block overflow-visible ${orientation}`;
   const image = (
     <>
@@ -27,8 +33,8 @@ export const CourseCardImage = ({ cardId, orientation }) => {
         // w-100 is necessary for images on Safari, otherwise stretches full height of the image
         // https://stackoverflow.com/a/44250830
         className="pgn__card-image-cap w-100 show"
-        src={bannerImgSrc}
-        alt={formatMessage(messages.bannerAlt)}
+        src={imageSrc}
+        alt={bannerImgSrc ? formatMessage(messages.bannerAlt) : `${config.SITE_NAME || 'Chalix'} Logo`}
       />
       {
         isVerified && (

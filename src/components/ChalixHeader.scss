@@ -1,0 +1,147 @@
+.chalix-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.chalix-navbar {
+    padding: 0.75rem 0;
+    background: transparent !important;
+}
+
+.chalix-brand {
+    transition: transform 0.2s ease;
+}
+
+.chalix-brand:hover {
+    transform: scale(1.05);
+}
+
+.chalix-main-nav {
+    gap: 2rem;
+}
+
+.chalix-nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    font-size: 1rem;
+    position: relative;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem !important;
+    border-radius: 8px;
+}
+
+.chalix-nav-link:hover {
+    color: #f8f9fa !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.chalix-nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+}
+
+.chalix-header-actions {
+    gap: 0.5rem;
+}
+
+.chalix-search-btn,
+.chalix-notification-btn,
+.chalix-user-toggle {
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+}
+
+.chalix-search-btn:hover,
+.chalix-notification-btn:hover,
+.chalix-user-toggle:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.chalix-user-menu {
+    background: #ffffff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+}
+
+.chalix-user-menu .dropdown-item {
+    padding: 0.75rem 1.5rem;
+    color: #333333;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.chalix-user-menu .dropdown-item:hover {
+    background: #f8f9fa;
+    color: #667eea;
+    transform: translateX(4px);
+}
+
+.chalix-user-menu .dropdown-divider {
+    margin: 0.5rem 1rem;
+    border-color: #e9ecef;
+}
+
+/* Mobile Responsive */
+@media (max-width: 991.98px) {
+    .chalix-main-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin: 1rem 0;
+    }
+
+    .chalix-header-actions {
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .chalix-nav-link {
+        text-align: center;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .chalix-header-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+        width: 100%;
+    }
+
+    .chalix-search-btn,
+    .chalix-notification-btn,
+    .chalix-user-toggle {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Animation for navbar collapse */
+.navbar-collapse {
+    transition: all 0.3s ease;
+}
+
+/* Focus states for accessibility */
+.chalix-search-btn:focus,
+.chalix-notification-btn:focus,
+.chalix-user-toggle:focus {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+.chalix-nav-link:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.7);
+    outline-offset: 2px;
+}

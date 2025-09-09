@@ -1,3 +1,40 @@
+// Dashboard Navigation Styles
+.dashboard-navigation {
+  .nav-tabs {
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 0;
+
+    .nav-item {
+      margin-bottom: -2px;
+
+      .nav-link {
+        border: none;
+        border-bottom: 3px solid transparent;
+        color: #6c757d;
+        font-weight: 500;
+        padding: 12px 24px;
+        border-radius: 0;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        background: transparent;
+
+        &:hover {
+          color: #007bff;
+          background: rgba(0, 123, 255, 0.05);
+          border-color: transparent;
+        }
+
+        &.active {
+          color: #007bff;
+          background: transparent;
+          border-bottom-color: #007bff;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
 .course-list-column {
   padding: 0 var(--pgn-spacing-spacer-4);
 }
@@ -8,7 +45,7 @@
   &.not-collapsed {
     padding-top: var(--pgn-spacing-spacer-2);
 
-    & >:first-child {
+    &>:first-child {
       margin-top: var(--pgn-spacing-spacer-5-5);
     }
   }
@@ -16,12 +53,21 @@
 
 @media (--pgn-size-breakpoint-max-width-lg) {
   .sidebar-column {
+
     // grid are inheriting dir="ltr" from the body, so we need to override it
     [dir=ltr] & {
       padding: 0 var(--pgn-spacing-spacer-3);
     }
+
     [dir=rtl] & {
       padding: 0 var(--pgn-spacing-spacer-3);
+    }
+  }
+
+  .dashboard-navigation {
+    .nav-tabs .nav-item .nav-link {
+      padding: 10px 16px;
+      font-size: 0.9rem;
     }
   }
 }

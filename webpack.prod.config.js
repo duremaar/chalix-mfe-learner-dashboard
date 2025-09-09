@@ -9,7 +9,15 @@ config.resolve.modules = [
   'node_modules',
 ];
 
-config.module.rules[0].exclude = /node_modules\/(?!(split-on-first|strict-uri-encode|@edx))/;
+config.module.rules[0].test = /\.(js|jsx|ts|tsx)$/;
+
+config.resolve.extensions.push('.tsx', '.ts');
+
+// Add alias for footer component to help with resolution
+config.resolve.alias = {
+  ...config.resolve.alias,
+  '@chalix/frontend-component-footer': path.resolve(__dirname, '../chalix-mfe-component-footer/src'),
+};
 
 config.plugins.push(
   new CopyPlugin({

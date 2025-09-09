@@ -1,0 +1,150 @@
+.learning-hours-progress {
+    margin-bottom: 1.5rem;
+
+    .learning-hours-content {
+        .learning-hours-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            margin-bottom: 0.75rem;
+
+            .stat-item {
+                display: flex;
+                align-items: center;
+                font-size: 16px;
+
+                .stat-label {
+                    color: #000;
+                    font-weight: 500;
+                }
+
+                .stat-value {
+                    color: #000;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .progress-container {
+            margin: 0.75rem 0;
+
+            .learning-progress-bar {
+                border-radius: 3px;
+                overflow: hidden;
+                background-color: #b2b2b2;
+
+                .progress-bar {
+                    background-color: #3494c8;
+                    transition: width 0.6s ease;
+                }
+
+                &.progress-bar-success .progress-bar {
+                    background-color: #28a745;
+                }
+
+                &.progress-bar-warning .progress-bar {
+                    background-color: #ffc107;
+                }
+
+                &.progress-bar-danger .progress-bar {
+                    background-color: #dc3545;
+                }
+            }
+        }
+
+        .status-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 0.5rem;
+
+            .status-badge {
+                font-size: 16px;
+                font-weight: 500;
+                border-radius: 4px;
+
+                .status-text {
+                    font-size: inherit;
+                }
+            }
+        }
+
+        .additional-info {
+            text-align: left;
+
+            small {
+                font-size: 14px;
+                color: #6c757d;
+            }
+        }
+    }
+}
+
+// Media queries for responsive design
+@media (min-width: 768px) {
+    .learning-hours-progress {
+        .learning-hours-content {
+            .learning-hours-stats {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                .stat-item {
+                    flex: 1;
+                }
+            }
+        }
+    }
+}
+
+// Specific styling to match Figma design
+.learning-hours-progress {
+    border: 1px solid #9b9595;
+    border-radius: 5px;
+    background: white;
+
+    .card-body {
+        padding: 1rem 1.5rem;
+    }
+
+    .learning-hours-stats .stat-item .stat-label {
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 1.4;
+        color: #000;
+    }
+
+    .learning-hours-stats .stat-item .stat-value {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1.4;
+        color: #000;
+    }
+
+    .progress-container {
+        margin: 0.75rem 0 1rem 0;
+
+        .learning-progress-bar {
+            height: 6px;
+            background-color: #b2b2b2;
+            border-radius: 3px;
+
+            .progress-bar {
+                background-color: #3494c8;
+                border-radius: 3px;
+            }
+        }
+    }
+
+    .status-section {
+        text-align: right;
+
+        .status-badge {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+    }
+}

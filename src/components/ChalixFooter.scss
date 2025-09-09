@@ -1,0 +1,190 @@
+.chalix-footer {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #ffffff;
+    margin-top: auto;
+}
+
+.chalix-footer-brand {
+    .chalix-footer-description {
+        color: #bdc3c7;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.chalix-social-links {
+    display: flex;
+    align-items: center;
+}
+
+.chalix-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.chalix-social-link:hover {
+    background: #3498db;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+}
+
+.chalix-footer-title {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #3498db;
+    display: inline-block;
+}
+
+.chalix-footer-nav {
+    gap: 0.25rem;
+}
+
+.chalix-footer-link {
+    color: #bdc3c7 !important;
+    font-size: 0.9rem;
+    padding: 0.5rem 0 !important;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    padding-left: 0.75rem !important;
+}
+
+.chalix-footer-link:hover {
+    color: #3498db !important;
+    border-left-color: #3498db;
+    transform: translateX(4px);
+}
+
+.chalix-contact-info {
+    .chalix-contact-item {
+        color: #bdc3c7;
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+
+        i {
+            color: #3498db;
+            width: 20px;
+        }
+    }
+}
+
+.chalix-footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+}
+
+.chalix-copyright,
+.chalix-version {
+    color: #95a5a6;
+    font-size: 0.85rem;
+}
+
+.chalix-version {
+    font-style: italic;
+}
+
+/* Mobile Responsive */
+@media (max-width: 767.98px) {
+    .chalix-footer {
+        text-align: center;
+
+        .chalix-footer-bottom {
+            .text-md-end {
+                text-align: center !important;
+                margin-top: 0.5rem;
+            }
+        }
+    }
+
+    .chalix-social-links {
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .chalix-footer-title {
+        margin-top: 1.5rem;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+}
+
+@media (max-width: 575.98px) {
+    .chalix-footer {
+        padding: 2rem 0;
+
+        .py-5 {
+            padding: 2rem 0 !important;
+        }
+    }
+
+    .chalix-contact-item {
+        justify-content: center;
+        text-align: left;
+        max-width: 250px;
+        margin: 0 auto 0.75rem auto !important;
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chalix-footer {
+    animation: fadeInUp 0.6s ease;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .chalix-footer {
+        background: #000000;
+
+        .chalix-footer-link:hover {
+            color: #ffffff !important;
+            background: #3498db;
+        }
+
+        .chalix-social-link:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+    .chalix-footer,
+    .chalix-social-link,
+    .chalix-footer-link {
+        animation: none;
+        transition: none;
+    }
+}
