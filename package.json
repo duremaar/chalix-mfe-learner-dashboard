@@ -43,7 +43,7 @@
     "@openedx/frontend-plugin-framework": "^1.7.0",
     "@openedx/paragon": "^23.4.5",
     "@redux-devtools/extension": "3.3.0",
-    "@reduxjs/toolkit": "^2.0.0",
+    "@reduxjs/toolkit": "^1.9.7",
     "classnames": "^2.3.1",
     "core-js": "3.45.0",
     "filesize": "^10.0.0",
