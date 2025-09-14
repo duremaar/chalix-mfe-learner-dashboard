@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChalixHeader } from '@chalix/frontend-component-header';
+// import { ChalixHeader } from '@chalix/frontend-component-header';
 
 import MasqueradeBar from 'containers/MasqueradeBar';
 import { AppContext } from '@edx/frontend-platform/react';
@@ -29,10 +29,10 @@ export const LearnerDashboardHeader = () => {
   return (
     <>
       <ConfirmEmailBanner />
-      <ChalixHeader 
+      {/* <ChalixHeader 
         platformName="PHẦN MỀM HỌC TẬP THÔNG MINH DÀNH CHO CÔNG CHỨC, VIÊN CHỨC"
         searchPlaceholder="Nhập từ khóa tìm kiếm"
-      />
+      /> */}
       <MasqueradeBar />
     </>
   );

@@ -7,7 +7,7 @@ import { initializeHotjar } from '@edx/frontend-enterprise-hotjar';
 
 import { ErrorPage, AppContext } from '@edx/frontend-platform/react';
 import { Alert } from '@openedx/paragon';
-import { ChalixFooter } from '@chalix/frontend-component-footer';
+// import { ChalixFooter } from '@chalix/frontend-component-footer';
 
 import { RequestKeys } from 'data/constants/requests';
 import store from 'data/store';
@@ -91,7 +91,7 @@ export const App = () => {
               )}
           </main>
         </AppWrapper>
-        <ChalixFooter />
+        {/* <ChalixFooter /> */}
       </div>
     </>
   );

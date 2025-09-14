@@ -14,12 +14,6 @@ config.module.rules[0].test = /\.(js|jsx|ts|tsx)$/;
 
 config.resolve.extensions.push('.tsx', '.ts');
 
-// Add alias for footer component to help with resolution
-config.resolve.alias = {
-  ...config.resolve.alias,
-  '@chalix/frontend-component-footer': path.resolve(__dirname, '../chalix-mfe-component-footer'),
-};
-
 config.plugins.push(
   new CopyPlugin({
     patterns: [
