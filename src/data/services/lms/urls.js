@@ -3,6 +3,7 @@ import { StrictDict } from 'utils';
 import { getConfig } from '@edx/frontend-platform';
 
 const getBaseUrl = () => getConfig().LMS_BASE_URL;
+const getCmsBaseUrl = () => getConfig().STUDIO_BASE_URL || getConfig().CMS_BASE_URL;
 
 export const getApiUrl = () => (`${getConfig().LMS_BASE_URL}/api`);
 
@@ -30,6 +31,18 @@ export const creditPurchaseUrl = (courseId) => {
 };
 export const creditRequestUrl = (providerId) => `${getApiUrl()}/credit/v1/providers/${providerId}/request/`;
 
+// Course Creation and Management URLs
+const createCourse = () => `${getCmsBaseUrl()}/api/chalix/dashboard/create-course/`;
+const listCourses = () => `${getCmsBaseUrl()}/api/chalix/dashboard/list-courses/`;
+const courseDetail = (courseKey) => `${getCmsBaseUrl()}/api/chalix/dashboard/course-detail/${encodeURIComponent(courseKey)}/`;
+const updateCourse = () => `${getCmsBaseUrl()}/api/chalix/dashboard/update-course/`;
+
+// Program Template URLs
+const createProgram = () => `${getCmsBaseUrl()}/api/chalix/dashboard/create-program/`;
+const updateProgram = () => `${getCmsBaseUrl()}/api/chalix/dashboard/update-program/`;
+const listPrograms = () => `${getCmsBaseUrl()}/api/chalix/dashboard/list-programs/`;
+const programDetail = (programId) => `${getCmsBaseUrl()}/api/chalix/dashboard/program-detail/${programId}/`;
+
 export default StrictDict({
   getApiUrl,
   baseAppUrl,
@@ -42,4 +55,14 @@ export default StrictDict({
   learningMfeUrl,
   programsUrl,
   updateEmailSettings,
+  // Course Creation and Management
+  createCourse,
+  listCourses,
+  courseDetail,
+  updateCourse,
+  // Program Templates
+  createProgram,
+  updateProgram,
+  listPrograms,
+  programDetail,
 });

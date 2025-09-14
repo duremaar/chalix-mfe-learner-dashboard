@@ -23,7 +23,9 @@ export const ViewCourseButton = ({ cardId }) => {
     <ActionButton
       disabled={disableViewCourse}
       as="a"
-      href="#"
+      href={homeUrl}
+      target="_blank"
+      rel="noopener noreferrer"
       onClick={handleClick}
     >
       {formatMessage(messages.viewCourse)}

@@ -12,6 +12,7 @@ import {
 } from './constants';
 import urls from './urls';
 import * as module from './api';
+import courseCreationApi from './courseCreation';
 
 /*********************************************************************************
  * GET Actions
@@ -74,4 +75,6 @@ export default {
   logEvent,
   logShare,
   createCreditRequest,
+  // Course Creation API
+  ...courseCreationApi,
 };
