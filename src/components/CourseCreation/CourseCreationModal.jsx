@@ -15,7 +15,12 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from '@openedx/paragon';
+} from '@openedx/              <option value="">{intl.formatMessage(messages.noProgramTemplate)}</option>
+              {programTemplates.map(program => (
+                <option key={program.id} value={program.id}>
+                  {program.title} ({program.topics_count || 0} chuyên đề)
+                </option>
+              ))}n';
 import { CheckCircle, AlertCircle } from '@openedx/paragon/icons';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -80,7 +85,8 @@ const CourseCreationModal = ({
   const loadProgramTemplates = async () => {
     setIsLoadingPrograms(true);
     try {
-      const response = await lmsApi.getProgramTemplates();
+      // Force fresh data by adding timestamp parameter to bypass cache
+      const response = await lmsApi.getProgramTemplates(true);
       setProgramTemplates(response.programs || []);
     } catch (err) {
       logError('Failed to load program templates:', err);
@@ -110,7 +116,7 @@ const CourseCreationModal = ({
     
     if (programId) {
       try {
-        const programDetail = await lmsApi.getProgramDetail(programId);
+        const programDetail = await lmsApi.getProgramDetail(programId, true);
         setSelectedProgram(programDetail);
       } catch (err) {
         logError('Failed to load program details:', err);
@@ -302,7 +308,7 @@ const CourseCreationModal = ({
               <option value=\"\">{intl.formatMessage(messages.noProgramTemplate)}</option>
               {programTemplates.map(program => (
                 <option key={program.id} value={program.id}>
-                  {program.title} ({program.topics_count || 0} topics)
+                  {program.title} ({(program.topics && program.topics.length) || 0} topics)
                 </option>
               ))}
             </Input>

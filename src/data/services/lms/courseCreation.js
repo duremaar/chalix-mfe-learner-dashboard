@@ -55,16 +55,36 @@ export const updateCourse = (updateData) => post(
 
 /**
  * Get list of available program templates
+ * @param {boolean} forceFresh - Force fresh data by bypassing cache
  * @returns {Promise} List of programs that can be used as templates
  */
-export const getProgramTemplates = () => get(urls.listPrograms());
+export const getProgramTemplates = (forceFresh = false) => {
+  const url = urls.listPrograms();
+  if (forceFresh) {
+    // Add timestamp to bypass browser cache
+    const cacheBuster = `_t=${Date.now()}`;
+    const separator = url.includes('?') ? '&' : '?';
+    return get(`${url}${separator}${cacheBuster}`);
+  }
+  return get(url);
+};
 
 /**
  * Get detailed information about a specific program template
  * @param {number} programId - Program ID
+ * @param {boolean} forceFresh - Force fresh data by bypassing cache
  * @returns {Promise} Program details with topics
  */
-export const getProgramDetail = (programId) => get(urls.programDetail(programId));
+export const getProgramDetail = (programId, forceFresh = false) => {
+  const url = urls.programDetail(programId);
+  if (forceFresh) {
+    // Add timestamp to bypass browser cache
+    const cacheBuster = `_t=${Date.now()}`;
+    const separator = url.includes('?') ? '&' : '?';
+    return get(`${url}${separator}${cacheBuster}`);
+  }
+  return get(url);
+};
 
 /**
  * Create a new program template
