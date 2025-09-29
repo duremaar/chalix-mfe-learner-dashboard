@@ -16,7 +16,7 @@ export const useLearningHours = () => {
       const client = getAuthenticatedHttpClient();
       const baseUrl = getConfig().LMS_BASE_URL;
       
-      const response = await client.get(`${baseUrl}/api/learning_analytics/v1/learning-hours/`);
+  const response = await client.get(`${baseUrl}/api/learning_analytics/learning-hours/`);
       setLearningHours(response.data);
       setError(null);
     } catch (err) {
@@ -57,7 +57,7 @@ export const useLearningHoursApproval = () => {
       const client = getAuthenticatedHttpClient();
       const baseUrl = getConfig().LMS_BASE_URL;
       
-      const response = await client.get(`${baseUrl}/api/learning_analytics/v1/learning-hours-approval/`);
+  const response = await client.get(`${baseUrl}/api/learning_analytics/learning-hours-approval/`);
       setApprovals(response.data);
       setError(null);
     } catch (err) {
@@ -75,7 +75,7 @@ export const useLearningHoursApproval = () => {
       const baseUrl = getConfig().LMS_BASE_URL;
       
       const response = await client.post(
-        `${baseUrl}/api/learning_analytics/v1/learning-hours-approval/`,
+        `${baseUrl}/api/learning_analytics/learning-hours-approval/`,
         data
       );
       
