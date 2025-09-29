@@ -47,11 +47,6 @@ export const ChalixCourseCard = ({ cardId }) => {
           </div>
           
           <div className="chalix-progress-section">
-            <div className="chalix-progress-header">
-              <span className="chalix-unit-count">
-                {progressData.completedUnits}/{progressData.totalUnits}
-              </span>
-            </div>
             <div className="chalix-progress-bar-container">
               <div className="chalix-progress-bar-track">
                 <div 
