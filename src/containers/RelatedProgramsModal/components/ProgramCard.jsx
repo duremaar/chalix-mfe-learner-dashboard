@@ -19,7 +19,6 @@ export const whiteFontWrapper = (node) => (<span className="text-white">{node}</
 export const ProgramCard = ({ data }) => {
   const { formatMessage } = useIntl();
   const config = getConfig();
-  
   // Use platform logo as fallback when program doesn't have a banner image
   const bannerImgSrc = data.bannerImgSrc || config.LOGO_URL || '/static/chalix_theme/images/logo.svg';
   
@@ -34,8 +33,7 @@ export const ProgramCard = ({ data }) => {
       as="a"
       href={data.programUrl}
       isClickable
-    >
-      <Card.ImageCap
+    >  <Card.ImageCap
         className="program-card-banner"
         src={bannerImgSrc}
         srcAlt={data.bannerImgSrc ? formatMessage(messages.bannerAlt) : `${config.SITE_NAME || 'Chalix'} Logo`}

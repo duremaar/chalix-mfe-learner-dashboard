@@ -1,9 +1,9 @@
-import { client, post, get } from './utils';
+import { post, get } from './utils';
 import urls from './urls';
 
 /**
  * Course Creation API Service
- * 
+
  * This service handles course creation using the OpenEDX CMS course creation logic,
  * including support for program topics conversion to course units.
  */
@@ -12,7 +12,7 @@ import urls from './urls';
  * Create a new OpenEDX course with optional program template
  * @param {Object} courseData - Course creation data
  * @param {string} courseData.title - Course title (required)
- * @param {string} courseData.org - Organization code (defaults to 'chalix')  
+ * @param {string} courseData.org - Organization code (defaults to 'chalix')
  * @param {string} courseData.number - Course number (auto-generated if not provided)
  * @param {string} courseData.run - Course run (defaults to current year)
  * @param {string} courseData.short_description - Course description (optional)

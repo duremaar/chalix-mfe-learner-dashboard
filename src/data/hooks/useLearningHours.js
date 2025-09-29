@@ -15,8 +15,8 @@ export const useLearningHours = () => {
       setLoading(true);
       const client = getAuthenticatedHttpClient();
       const baseUrl = getConfig().LMS_BASE_URL;
-      
-  const response = await client.get(`${baseUrl}/api/learning_analytics/learning-hours/`);
+
+      const response = await client.get(`${baseUrl}/api/learning_analytics/learning-hours/`);
       setLearningHours(response.data);
       setError(null);
     } catch (err) {
@@ -39,7 +39,7 @@ export const useLearningHours = () => {
     learningHours,
     loading,
     error,
-    refetch
+    refetch,
   };
 };
 
@@ -56,8 +56,8 @@ export const useLearningHoursApproval = () => {
       setLoading(true);
       const client = getAuthenticatedHttpClient();
       const baseUrl = getConfig().LMS_BASE_URL;
-      
-  const response = await client.get(`${baseUrl}/api/learning_analytics/learning-hours-approval/`);
+
+      const response = await client.get(`${baseUrl}/api/learning_analytics/learning-hours-approval/`);
       setApprovals(response.data);
       setError(null);
     } catch (err) {
@@ -73,12 +73,12 @@ export const useLearningHoursApproval = () => {
       setLoading(true);
       const client = getAuthenticatedHttpClient();
       const baseUrl = getConfig().LMS_BASE_URL;
-      
+
       const response = await client.post(
         `${baseUrl}/api/learning_analytics/learning-hours-approval/`,
-        data
+        data,
       );
-      
+
       // Refresh the approvals list
       await fetchApprovals();
       return response.data;
@@ -100,11 +100,11 @@ export const useLearningHoursApproval = () => {
     loading,
     error,
     fetchApprovals,
-    submitApprovalRequest
+    submitApprovalRequest,
   };
 };
 
 export default {
   useLearningHours,
-  useLearningHoursApproval
+  useLearningHoursApproval,
 };

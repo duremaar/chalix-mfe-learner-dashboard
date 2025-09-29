@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { getConfig } from '@edx/frontend-platform';
-import { Container, Row, Col, Card, ProgressBar, Tab, Tabs } from '@openedx/paragon';
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Tab,
+  Tabs,
+} from '@openedx/paragon';
+import PropTypes from 'prop-types';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import LearningOverview from './components/LearningOverview';
 import CourseDetails from './components/CourseDetails';
@@ -21,12 +29,10 @@ const PersonalizedLearning = ({ courseId = null }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
-  
   // Use learning hours hook
-  const { 
-    learningHours, 
-    loading: hoursLoading, 
-    error: hoursError 
+  const {
+    learningHours,
+    loading: hoursLoading,
   } = useLearningHours();
 
   useEffect(() => {
@@ -39,6 +45,7 @@ const PersonalizedLearning = ({ courseId = null }) => {
         const response = await client.get(`${baseUrl}/api/learning_analytics/v1/dashboard/`);
         setLearningData(response.data);
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error('Failed to fetch learning analytics:', err);
         setError(err);
       } finally {
@@ -104,15 +111,19 @@ const PersonalizedLearning = ({ courseId = null }) => {
                   onSelect={setActiveTab}
                   className="mb-4"
                 >
-                  <Tab 
-                    eventKey="overview" 
+                  <Tab
+                    eventKey="overview"
                     title={formatMessage(messages.overviewTab)}
                   >
                     <LearningOverview data={learningData} />
                   </Tab>
-                  <Tab 
-                    eventKey="courseDetails" 
-                    title={courseId ? formatMessage(messages.courseUnitsList) : formatMessage(messages.courseDetailsTab)}
+                  <Tab
+                    eventKey="courseDetails"
+                    title={
+                      courseId
+                        ? formatMessage(messages.courseUnitsList)
+                        : formatMessage(messages.courseDetailsTab)
+                    }
                   >
                     {courseId ? (
                       <CourseUnits courseId={courseId} />
@@ -120,8 +131,8 @@ const PersonalizedLearning = ({ courseId = null }) => {
                       <CourseDetails data={learningData} />
                     )}
                   </Tab>
-                  <Tab 
-                    eventKey="emotion" 
+                  <Tab
+                    eventKey="emotion"
                     title={formatMessage(messages.emotionRecognitionTab)}
                   >
                     <EmotionRecognition data={learningData} />
@@ -138,6 +149,14 @@ const PersonalizedLearning = ({ courseId = null }) => {
       </Container>
     </div>
   );
+};
+
+PersonalizedLearning.propTypes = {
+  courseId: PropTypes.string,
+};
+
+PersonalizedLearning.defaultProps = {
+  courseId: null,
 };
 
 export default PersonalizedLearning;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
@@ -20,11 +20,20 @@ export const CourseCardImage = ({ cardId, orientation }) => {
   const { homeUrl } = reduxHooks.useCardCourseRunData(cardId);
   const { isVerified } = reduxHooks.useCardEnrollmentData(cardId);
   const { disableCourseTitle } = useActionDisabledState(cardId);
-  const handleImageClicked = reduxHooks.useTrackCourseEvent(courseImageClicked, cardId, homeUrl);
+  const { handleImageClicked } = reduxHooks.useTrackCourseEvent(courseImageClicked, cardId, homeUrl);
   
-  // Use custom default course image as primary fallback, then platform logo, then theme logo
   const config = getConfig();
-  const imageSrc = bannerImgSrc || '/static/images/ai_cth.png' || config.LOGO_URL || '/static/chalix_theme/images/logo.svg';
+  const [imageError, setImageError] = useState(false);
+  
+  // If bannerImgSrc is an asset-v1 URL, use fallback directly to avoid 404s
+  const shouldUseFallback = !bannerImgSrc || bannerImgSrc.includes('asset-v1') || imageError;
+  const imageSrc = shouldUseFallback ? '/static/images/ai_cth.png' : (config.LOGO_URL || '/static/chalix_theme/images/logo.svg');
+  
+  const handleImageError = () => {
+    if (!imageError) {
+      setImageError(true);
+    }
+  };
   
   const wrapperClassName = `pgn__card-wrapper-image-cap d-inline-block overflow-visible ${orientation}`;
   const image = (
@@ -35,6 +44,7 @@ export const CourseCardImage = ({ cardId, orientation }) => {
         className="pgn__card-image-cap w-100 show"
         src={imageSrc}
         alt={bannerImgSrc ? formatMessage(messages.bannerAlt) : `${config.SITE_NAME || 'Chalix'} Logo`}
+        onError={handleImageError}
       />
       {
         isVerified && (

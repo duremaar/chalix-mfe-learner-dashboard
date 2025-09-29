@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Card, Row, Col, ProgressBar, Alert, Button } from '@openedx/paragon';
-import { Mood, TrendingUp, Psychology, Insights } from '@openedx/paragon/icons';
-import messages from '../messages';
+import PropTypes from 'prop-types';
+import {
+  Card,
+  Row,
+  Col,
+  ProgressBar,
+  Alert,
+} from '@openedx/paragon';
+import {
+  TrendingUp,
+  Psychology,
+  Insights,
+} from '@openedx/paragon/icons';
 
 const EmotionRecognition = ({ data }) => {
-  const { formatMessage } = useIntl();
   const [emotionData, setEmotionData] = useState(null);
 
   useEffect(() => {
@@ -20,7 +29,7 @@ const EmotionRecognition = ({ data }) => {
       <div className="text-center py-4">
         <Alert variant="info">
           <p className="mb-0">
-            Dữ liệu nhận diện cảm xúc sẽ được thu thập trong quá trình học tập. 
+            Dữ liệu nhận diện cảm xúc sẽ được thu thập trong quá trình học tập.
             Hãy tiếp tục học để xem phân tích cảm xúc của bạn.
           </p>
         </Alert>
@@ -29,23 +38,13 @@ const EmotionRecognition = ({ data }) => {
   }
 
   const {
-    dominant_emotion = 'neutral',
-    emotion_distribution = {},
-    learning_mood_trends = [],
+    dominantEmotion = 'neutral',
+    emotionDistribution = {},
+    learningMoodTrends = [],
     recommendations = [],
-    stress_levels = {},
-    engagement_score = 0
+    stressLevels = {},
+    engagementScore = 0,
   } = emotionData;
-
-  const emotionColors = {
-    happy: '#28a745',
-    excited: '#ffc107',
-    focused: '#17a2b8',
-    confused: '#fd7e14',
-    frustrated: '#dc3545',
-    bored: '#6c757d',
-    neutral: '#007bff'
-  };
 
   const getEmotionIcon = (emotion) => {
     switch (emotion) {
@@ -73,8 +72,12 @@ const EmotionRecognition = ({ data }) => {
   };
 
   const getStressLevel = (level) => {
-    if (level < 30) return { label: 'Thấp', variant: 'success' };
-    if (level < 70) return { label: 'Trung bình', variant: 'warning' };
+    if (level < 30) {
+      return { label: 'Thấp', variant: 'success' };
+    }
+    if (level < 70) {
+      return { label: 'Trung bình', variant: 'warning' };
+    }
     return { label: 'Cao', variant: 'danger' };
   };
 
@@ -87,10 +90,10 @@ const EmotionRecognition = ({ data }) => {
             <Card.Body className="text-center">
               <div className="mb-3">
                 <div className="display-4 mb-2">
-                  {getEmotionIcon(dominant_emotion)}
+                  {getEmotionIcon(dominantEmotion)}
                 </div>
                 <h5 className="text-primary">
-                  Trạng thái hiện tại: {getEmotionLabel(dominant_emotion)}
+                  Trạng thái hiện tại: {getEmotionLabel(dominantEmotion)}
                 </h5>
               </div>
               <p className="text-muted">
@@ -108,16 +111,22 @@ const EmotionRecognition = ({ data }) => {
                 <h6 className="mb-0">Mức độ tương tác</h6>
               </div>
               <div className="text-center">
-                <h3 className="text-info mb-2">{engagement_score}/100</h3>
-                <ProgressBar 
-                  now={engagement_score} 
-                  variant={engagement_score >= 80 ? 'success' : 
-                          engagement_score >= 60 ? 'info' : 'warning'}
+                <h3 className="text-info mb-2">{engagementScore}/100</h3>
+                <ProgressBar
+                  now={engagementScore}
+                  variant={
+                    engagementScore >= 80 ? 'success' :
+                    engagementScore >= 60 ? 'info' :
+                    'warning'
+                  }
                 />
                 <small className="text-muted mt-1 d-block">
-                  {engagement_score >= 80 ? 'Rất tích cực' :
-                   engagement_score >= 60 ? 'Tích cực' :
-                   engagement_score >= 40 ? 'Bình thường' : 'Cần cải thiện'}
+                  {
+                    engagementScore >= 80 ? 'Rất tích cực' :
+                    engagementScore >= 60 ? 'Tích cực' :
+                    engagementScore >= 40 ? 'Bình thường' :
+                    'Cần cải thiện'
+                  }
                 </small>
               </div>
             </Card.Body>
@@ -133,9 +142,9 @@ const EmotionRecognition = ({ data }) => {
               <h6 className="mb-0">Phân bố cảm xúc trong học tập</h6>
             </Card.Header>
             <Card.Body>
-              {Object.entries(emotion_distribution).length > 0 ? (
+              {Object.entries(emotionDistribution).length > 0 ? (
                 <div>
-                  {Object.entries(emotion_distribution).map(([emotion, percentage]) => (
+                  {Object.entries(emotionDistribution).map(([emotion, percentage]) => (
                     <div key={emotion} className="mb-3">
                       <div className="d-flex justify-content-between align-items-center mb-1">
                         <span className="d-flex align-items-center">
@@ -144,11 +153,11 @@ const EmotionRecognition = ({ data }) => {
                         </span>
                         <span className="fw-medium">{Math.round(percentage)}%</span>
                       </div>
-                      <ProgressBar 
-                        now={percentage} 
-                        style={{ 
+                      <ProgressBar
+                        now={percentage}
+                        style={{
                           height: '8px',
-                          backgroundColor: '#f8f9fa'
+                          backgroundColor: '#f8f9fa',
                         }}
                       />
                     </div>
@@ -170,23 +179,26 @@ const EmotionRecognition = ({ data }) => {
               <h6 className="mb-0">Mức độ căng thẳng</h6>
             </Card.Header>
             <Card.Body>
-              {Object.entries(stress_levels).length > 0 ? (
+              {Object.entries(stressLevels).length > 0 ? (
                 <div>
-                  {Object.entries(stress_levels).map(([timeframe, level]) => {
+                  {Object.entries(stressLevels).map(([timeframe, level]) => {
                     const stressInfo = getStressLevel(level);
                     return (
                       <div key={timeframe} className="mb-2">
                         <div className="d-flex justify-content-between">
                           <small className="text-muted">
-                            {timeframe === 'daily' ? 'Hôm nay' :
-                             timeframe === 'weekly' ? 'Tuần này' : 'Tháng này'}
+                            {
+                              timeframe === 'daily' ? 'Hôm nay' :
+                              timeframe === 'weekly' ? 'Tuần này' :
+                              'Tháng này'
+                            }
                           </small>
                           <small className={`text-${stressInfo.variant}`}>
                             {stressInfo.label}
                           </small>
                         </div>
-                        <ProgressBar 
-                          now={level} 
+                        <ProgressBar
+                          now={level}
                           variant={stressInfo.variant}
                           style={{ height: '6px' }}
                         />
@@ -203,7 +215,7 @@ const EmotionRecognition = ({ data }) => {
       </Row>
 
       {/* Learning Mood Trends */}
-      {learning_mood_trends.length > 0 && (
+      {learningMoodTrends.length > 0 && (
         <Row className="mb-4">
           <Col md={12}>
             <Card>
@@ -212,14 +224,14 @@ const EmotionRecognition = ({ data }) => {
               </Card.Header>
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  {learning_mood_trends.slice(-7).map((trend, index) => (
-                    <div key={index} className="text-center">
+                  {learningMoodTrends.slice(-7).map((trend, index) => (
+                    <div key={`${trend.date}-${index}`} className="text-center">
                       <div className="mb-1" style={{ fontSize: '24px' }}>
-                        {getEmotionIcon(trend.dominant_emotion)}
+                        {getEmotionIcon(trend.dominantEmotion)}
                       </div>
                       <small className="text-muted">
-                        {new Date(trend.date).toLocaleDateString('vi-VN', { 
-                          weekday: 'short' 
+                        {new Date(trend.date).toLocaleDateString('vi-VN', {
+                          weekday: 'short',
                         })}
                       </small>
                     </div>
@@ -245,10 +257,10 @@ const EmotionRecognition = ({ data }) => {
               <Card.Body>
                 <div className="row">
                   {recommendations.map((recommendation, index) => (
-                    <div key={index} className="col-md-6 mb-3">
+                    <div key={`${recommendation.title}-${index}`} className="col-md-6 mb-3">
                       <div className="d-flex">
                         <div className="me-3">
-                          <div 
+                          <div
                             className="rounded-circle bg-light p-2"
                             style={{ width: '40px', height: '40px' }}
                           >
@@ -272,6 +284,25 @@ const EmotionRecognition = ({ data }) => {
       )}
     </div>
   );
+};
+
+EmotionRecognition.propTypes = {
+  data: PropTypes.shape({
+    emotion_analysis: PropTypes.shape({
+      dominant_emotion: PropTypes.string,
+      emotion_distribution: PropTypes.objectOf(PropTypes.number),
+      learning_mood_trends: PropTypes.arrayOf(PropTypes.shape({
+        dominant_emotion: PropTypes.string,
+        date: PropTypes.string,
+      })),
+      recommendations: PropTypes.arrayOf(PropTypes.shape({
+        title: PropTypes.string,
+        description: PropTypes.string,
+      })),
+      stress_levels: PropTypes.objectOf(PropTypes.number),
+      engagement_score: PropTypes.number,
+    }),
+  }),
 };
 
 export default EmotionRecognition;

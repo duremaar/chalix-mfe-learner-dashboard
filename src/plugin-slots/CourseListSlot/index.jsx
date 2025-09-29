@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
-import { CourseList, courseListDataShape } from 'containers/CoursesPanel/CourseList';
+import { courseListDataShape } from 'containers/CoursesPanel/CourseList';
 import ChalixCourseList from 'containers/CoursesPanel/CourseList/ChalixCourseList';
 
 export const CourseListSlot = ({ courseListData }) => (
