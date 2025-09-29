@@ -22,9 +22,9 @@ export const CourseCardImage = ({ cardId, orientation }) => {
   const { disableCourseTitle } = useActionDisabledState(cardId);
   const handleImageClicked = reduxHooks.useTrackCourseEvent(courseImageClicked, cardId, homeUrl);
   
-  // Use platform logo as fallback when course doesn't have an image
+  // Use custom default course image as primary fallback, then platform logo, then theme logo
   const config = getConfig();
-  const imageSrc = bannerImgSrc || config.LOGO_URL || '/static/chalix_theme/images/logo.svg';
+  const imageSrc = bannerImgSrc || '/static/images/ai_cth.png' || config.LOGO_URL || '/static/chalix_theme/images/logo.svg';
   
   const wrapperClassName = `pgn__card-wrapper-image-cap d-inline-block overflow-visible ${orientation}`;
   const image = (
