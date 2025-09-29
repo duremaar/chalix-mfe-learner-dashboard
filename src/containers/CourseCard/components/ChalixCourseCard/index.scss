@@ -4,6 +4,21 @@
     width: 100%;
     max-width: 400px;
     margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+
+        .chalix-course-container {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    &:focus {
+        outline: 2px solid #3494c8;
+        outline-offset: 2px;
+    }
 }
 
 .chalix-course-container {
@@ -11,10 +26,11 @@
     border: 1px solid #b2b2b2;
     border-radius: 5px;
     overflow: hidden;
-    transition: box-shadow 0.3s ease;
+    transition: all 0.3s ease;
     height: 255px;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 
     &:hover {
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -162,6 +178,40 @@
 
     .pgn__action-row {
         justify-content: center;
+    }
+
+    .btn {
+        background-color: #3494c8 !important;
+        border-color: #3494c8 !important;
+        color: white !important;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        text-decoration: none !important;
+        position: relative;
+        z-index: 10; // Ensure buttons are clickable over card click handler
+
+        &:hover,
+        &:focus {
+            background-color: #2a7ba8 !important;
+            border-color: #2a7ba8 !important;
+            color: white !important;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+
+        &:disabled {
+            background-color: #cccccc !important;
+            border-color: #cccccc !important;
+            color: #666666 !important;
+            cursor: not-allowed;
+            transform: none;
+        }
     }
 }
 
