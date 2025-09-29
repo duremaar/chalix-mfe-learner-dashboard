@@ -61,9 +61,9 @@ const LearningOverview = ({ data }) => {
       {/* Stats Cards Row */}
       <Row className="mb-4">
         {statsCards.map((stat, index) => (
-          <Col key={index} md={3} className="mb-3">
+          <Col key={`${stat.title}-${index}`} md={3} className="mb-3">
             <Card className="h-100 shadow-sm">
-            <Card.Body className="d-flex align-items-center">
+              <Card.Body className="d-flex align-items-center">
                 <div
                   className="rounded-circle p-3 me-3"
                   style={{ backgroundColor: stat.bgColor }}
@@ -104,11 +104,9 @@ const LearningOverview = ({ data }) => {
                       <ProgressBar
                         now={course.progressPercentage}
                         variant={
-                          course.progressPercentage >= 80
-                            ? 'success'
-                            : course.progressPercentage >= 50
-                            ? 'info'
-                            : 'warning'
+                          course.progressPercentage >= 80 ? 'success' :
+                          course.progressPercentage >= 50 ? 'info' :
+                          'warning'
                         }
                         style={{ height: '8px' }}
                       />

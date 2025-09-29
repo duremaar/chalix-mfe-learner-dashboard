@@ -27,7 +27,23 @@ export const CourseCardImage = ({ cardId, orientation }) => {
   
   // If bannerImgSrc is an asset-v1 URL, use fallback directly to avoid 404s
   const shouldUseFallback = !bannerImgSrc || bannerImgSrc.includes('asset-v1') || imageError;
-  const imageSrc = shouldUseFallback ? '/static/images/ai_cth.png' : (config.LOGO_URL || '/static/chalix_theme/images/logo.svg');
+  
+  // Use the full URL for fallback since we know it works at https://itg-acst.edu.vn/static/images/ai_cth.png
+  const fallbackImageUrl = config.LMS_BASE_URL ? 
+    `${config.LMS_BASE_URL}/static/images/ai_cth.png` : 
+    '/static/images/ai_cth.png';
+  
+  const imageSrc = shouldUseFallback ? fallbackImageUrl : bannerImgSrc;
+  
+  // Debug logging for image issues
+  if (shouldUseFallback && process.env.NODE_ENV === 'production') {
+    console.log('CourseCardImage: Using fallback image', {
+      cardId,
+      bannerImgSrc,
+      imageSrc: fallbackImageUrl,
+      reason: !bannerImgSrc ? 'no banner' : bannerImgSrc.includes('asset-v1') ? 'asset-v1 URL' : 'image error'
+    });
+  }
   
   const handleImageError = () => {
     if (!imageError) {
@@ -43,7 +59,7 @@ export const CourseCardImage = ({ cardId, orientation }) => {
         // https://stackoverflow.com/a/44250830
         className="pgn__card-image-cap w-100 show"
         src={imageSrc}
-        alt={bannerImgSrc ? formatMessage(messages.bannerAlt) : `${config.SITE_NAME || 'Chalix'} Logo`}
+        alt={shouldUseFallback ? `${config.SITE_NAME || 'Chalix'} Logo` : formatMessage(messages.bannerAlt)}
         onError={handleImageError}
       />
       {

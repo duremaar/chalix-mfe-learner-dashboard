@@ -40,7 +40,6 @@ const PersonalizedLearning = ({ courseId = null }) => {
       try {
         const client = getAuthenticatedHttpClient();
         const baseUrl = getConfig().LMS_BASE_URL;
-        
         // Fetch learning analytics data
         const response = await client.get(`${baseUrl}/api/learning_analytics/v1/dashboard/`);
         setLearningData(response.data);
@@ -141,7 +140,7 @@ const PersonalizedLearning = ({ courseId = null }) => {
               </Card.Body>
             </Card>
           </Col>
-          
+
           <Col lg={3}>
             <CourseSidebar data={learningData} />
           </Col>

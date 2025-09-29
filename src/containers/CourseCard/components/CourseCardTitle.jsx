@@ -16,9 +16,22 @@ export const CourseCardTitle = ({ cardId }) => {
     homeUrl,
   );
   const { disableCourseTitle } = useActionDisabledState(cardId);
+  
+  // Debug logging for production issues
+  if (!homeUrl && process.env.NODE_ENV === 'production') {
+    console.warn(`CourseCardTitle: Missing homeUrl for course ${cardId}`, {
+      courseName,
+      homeUrl,
+      cardId,
+    });
+  }
+  
+  // Disable course title if homeUrl is missing
+  const shouldDisableTitle = disableCourseTitle || !homeUrl;
+  
   return (
     <h3>
-      {disableCourseTitle ? (
+      {shouldDisableTitle ? (
         <span className="course-card-title" data-testid="CourseCardTitle">{courseName}</span>
       ) : (
         <a

@@ -1,8 +1,162 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { DataTable, Card, Badge, Button, Form } from '@openedx/paragon';
 import { PlayCircle, CheckCircle, AccessTime } from '@openedx/paragon/icons';
 import messages from '../messages';
+
+const CourseNameCell = ({ row }) => (
+  <div>
+    <div className="fw-medium">{row.original.course_name}</div>
+    <small className="text-muted">{row.original.course_org}</small>
+  </div>
+);
+
+CourseNameCell.propTypes = {
+  row: PropTypes.shape({
+    original: PropTypes.shape({
+      course_name: PropTypes.string,
+      course_org: PropTypes.string,
+    }),
+  }).isRequired,
+};
+
+const StatusCell = ({ row }) => {
+  const getStatusBadge = (progress) => {
+    if (progress >= 100) {
+      return <Badge variant="success"><CheckCircle className="me-1" size="sm" />Hoàn thành</Badge>;
+    } else if (progress > 0) {
+      return <Badge variant="info"><PlayCircle className="me-1" size="sm" />Đang học</Badge>;
+    } else {
+      return <Badge variant="secondary"><AccessTime className="me-1" size="sm" />Chưa bắt đầu</Badge>;
+    }
+  };
+
+  return getStatusBadge(row.original.progress_percentage);
+};
+
+StatusCell.propTypes = {
+  row: PropTypes.shape({
+    original: PropTypes.shape({
+      progress_percentage: PropTypes.number,
+    }),
+  }).isRequired,
+};
+
+const ProgressCell = ({ row }) => (
+  <div className="d-flex align-items-center">
+    <div className="progress me-2" style={{ width: '100px', height: '6px' }}>
+      <div
+        className="progress-bar"
+        role="progressbar"
+        style={{ width: `${row.original.progress_percentage}%` }}
+        aria-valuenow={row.original.progress_percentage}
+        aria-valuemin="0"
+        aria-valuemax="100"
+      />
+    </div>
+    <small>{Math.round(row.original.progress_percentage)}%</small>
+  </div>
+);
+
+ProgressCell.propTypes = {
+  row: PropTypes.shape({
+    original: PropTypes.shape({
+      progress_percentage: PropTypes.number,
+    }),
+  }).isRequired,
+};
+
+const TimeSpentCell = ({ row }) => {
+  const formatDuration = (minutes) => {
+    if (minutes < 60) return `${minutes} phút`;
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins}m`;
+  };
+
+  return <span>{formatDuration(row.original.time_spent || 0)}</span>;
+};
+
+TimeSpentCell.propTypes = {
+  row: PropTypes.shape({
+    original: PropTypes.shape({
+      time_spent: PropTypes.number,
+    }),
+  }).isRequired,
+};
+
+const GradeCell = ({ row }) => (
+  <span className={`fw-medium ${
+    row.original.grade >= 80 ? 'text-success' :
+    row.original.grade >= 60 ? 'text-warning' :
+    'text-danger'
+  }`}>
+    {row.original.grade ? `${row.original.grade}%` : '--'}
+  </span>
+);
+
+GradeCell.propTypes = {
+  row: PropTypes.shape({
+    original: PropTypes.shape({
+      grade: PropTypes.number,
+    }),
+  }).isRequired,
+};
+
+const LastAccessedCell = ({ row }) => (
+  <small className="text-muted">
+    {row.original.last_accessed ?
+      new Date(row.original.last_accessed).toLocaleDateString('vi-VN') :
+      'Chưa truy cập'
+    }
+  </small>
+);
+
+LastAccessedCell.propTypes = {
+  row: PropTypes.shape({
+    original: PropTypes.shape({
+      last_accessed: PropTypes.string,
+    }),
+  }).isRequired,
+};
+
+const ActionsCell = ({ row }) => (
+  <div className="d-flex gap-2">
+    <Button
+      variant="outline-primary"
+      size="sm"
+      onClick={() => {
+        // Navigate to course
+        window.open(`/course/${row.original.course_id}`, '_blank');
+      }}
+    >
+      Xem khóa học
+    </Button>
+    <Button
+      variant="primary"
+      size="sm"
+      onClick={() => {
+        // Navigate to course units view
+        const currentUrl = window.location.pathname + window.location.search;
+        const separator = currentUrl.includes('?') ? '&' : '?';
+        const newUrl = `${currentUrl}${separator}course_id=${row.original.course_id}`;
+        window.history.pushState({}, '', newUrl);
+        window.location.reload();
+      }}
+    >
+      Xem lớp học
+    </Button>
+  </div>
+);
+
+ActionsCell.propTypes = {
+  row: PropTypes.shape({
+    original: PropTypes.shape({
+      course_id: PropTypes.string,
+    }),
+  }).isRequired,
+};
 
 const CourseDetails = ({ data }) => {
   const { formatMessage } = useIntl();
@@ -22,7 +176,7 @@ const CourseDetails = ({ data }) => {
     } else if (status === 'completed') {
       setFilteredCourses(course_progress.filter(course => course.progress_percentage >= 100));
     } else if (status === 'in_progress') {
-      setFilteredCourses(course_progress.filter(course => 
+      setFilteredCourses(course_progress.filter(course =>
         course.progress_percentage > 0 && course.progress_percentage < 100
       ));
     } else if (status === 'not_started') {
@@ -30,118 +184,41 @@ const CourseDetails = ({ data }) => {
     }
   };
 
-  const getStatusBadge = (progress) => {
-    if (progress >= 100) {
-      return <Badge variant="success"><CheckCircle className="me-1" size="sm" />Hoàn thành</Badge>;
-    } else if (progress > 0) {
-      return <Badge variant="info"><PlayCircle className="me-1" size="sm" />Đang học</Badge>;
-    } else {
-      return <Badge variant="secondary"><AccessTime className="me-1" size="sm" />Chưa bắt đầu</Badge>;
-    }
-  };
-
-  const formatDuration = (minutes) => {
-    if (minutes < 60) return `${minutes} phút`;
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return `${hours}h ${mins}m`;
-  };
-
   const columns = [
     {
       Header: 'Tên khóa học',
       accessor: 'course_name',
-      Cell: ({ row }) => (
-        <div>
-          <div className="fw-medium">{row.original.course_name}</div>
-          <small className="text-muted">{row.original.course_org}</small>
-        </div>
-      ),
+      Cell: CourseNameCell,
     },
     {
       Header: 'Trạng thái',
       accessor: 'progress_percentage',
-      Cell: ({ row }) => getStatusBadge(row.original.progress_percentage),
+      Cell: StatusCell,
     },
     {
       Header: 'Tiến độ',
       accessor: 'progress_percentage',
-      Cell: ({ row }) => (
-        <div className="d-flex align-items-center">
-          <div className="progress me-2" style={{ width: '100px', height: '6px' }}>
-            <div
-              className="progress-bar"
-              role="progressbar"
-              style={{ width: `${row.original.progress_percentage}%` }}
-              aria-valuenow={row.original.progress_percentage}
-              aria-valuemin="0"
-              aria-valuemax="100"
-            />
-          </div>
-          <small>{Math.round(row.original.progress_percentage)}%</small>
-        </div>
-      ),
+      Cell: ProgressCell,
     },
     {
       Header: 'Thời gian học',
       accessor: 'time_spent',
-      Cell: ({ row }) => (
-        <span>{formatDuration(row.original.time_spent || 0)}</span>
-      ),
+      Cell: TimeSpentCell,
     },
     {
       Header: 'Điểm số',
       accessor: 'grade',
-      Cell: ({ row }) => (
-        <span className={`fw-medium ${row.original.grade >= 80 ? 'text-success' : 
-                        row.original.grade >= 60 ? 'text-warning' : 'text-danger'}`}>
-          {row.original.grade ? `${row.original.grade}%` : '--'}
-        </span>
-      ),
+      Cell: GradeCell,
     },
     {
       Header: 'Lần truy cập cuối',
       accessor: 'last_accessed',
-      Cell: ({ row }) => (
-        <small className="text-muted">
-          {row.original.last_accessed ? 
-            new Date(row.original.last_accessed).toLocaleDateString('vi-VN') : 
-            'Chưa truy cập'
-          }
-        </small>
-      ),
+      Cell: LastAccessedCell,
     },
     {
       Header: 'Hành động',
       accessor: 'course_id',
-      Cell: ({ row }) => (
-        <div className="d-flex gap-2">
-          <Button 
-            variant="outline-primary" 
-            size="sm"
-            onClick={() => {
-              // Navigate to course
-              window.open(`/course/${row.original.course_id}`, '_blank');
-            }}
-          >
-            Xem khóa học
-          </Button>
-          <Button 
-            variant="primary" 
-            size="sm"
-            onClick={() => {
-              // Navigate to course units view
-              const currentUrl = window.location.pathname + window.location.search;
-              const separator = currentUrl.includes('?') ? '&' : '?';
-              const newUrl = `${currentUrl}${separator}course_id=${row.original.course_id}`;
-              window.history.pushState({}, '', newUrl);
-              window.location.reload();
-            }}
-          >
-            Xem lớp học
-          </Button>
-        </div>
-      ),
+      Cell: ActionsCell,
     },
   ];
 
@@ -243,6 +320,20 @@ const CourseDetails = ({ data }) => {
       </Card>
     </div>
   );
+};
+
+CourseDetails.propTypes = {
+  data: PropTypes.shape({
+    course_progress: PropTypes.arrayOf(PropTypes.shape({
+      course_name: PropTypes.string,
+      course_org: PropTypes.string,
+      progress_percentage: PropTypes.number,
+      time_spent: PropTypes.number,
+      grade: PropTypes.number,
+      last_accessed: PropTypes.string,
+      course_id: PropTypes.string,
+    })),
+  }),
 };
 
 export default CourseDetails;

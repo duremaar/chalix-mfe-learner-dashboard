@@ -33,7 +33,8 @@ export const ProgramCard = ({ data }) => {
       as="a"
       href={data.programUrl}
       isClickable
-    >  <Card.ImageCap
+    >
+      <Card.ImageCap
         className="program-card-banner"
         src={bannerImgSrc}
         srcAlt={data.bannerImgSrc ? formatMessage(messages.bannerAlt) : `${config.SITE_NAME || 'Chalix'} Logo`}

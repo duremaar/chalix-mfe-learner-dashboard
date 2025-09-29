@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useIntl } from '@edx/frontend-platform/i18n';
 import PropTypes from 'prop-types';
 import {
   Card,
@@ -187,11 +186,9 @@ const EmotionRecognition = ({ data }) => {
                       <div key={timeframe} className="mb-2">
                         <div className="d-flex justify-content-between">
                           <small className="text-muted">
-                            {
-                              timeframe === 'daily' ? 'Hôm nay' :
-                              timeframe === 'weekly' ? 'Tuần này' :
-                              'Tháng này'
-                            }
+                            {timeframe === 'daily' ? 'Hôm nay' :
+                             timeframe === 'weekly' ? 'Tuần này' :
+                             'Tháng này'}
                           </small>
                           <small className={`text-${stressInfo.variant}`}>
                             {stressInfo.label}

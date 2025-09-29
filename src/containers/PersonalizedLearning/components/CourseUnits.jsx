@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { useIntl } from '@edx/frontend-platform/i18n';
-import { 
-  Container, 
-  Row, 
-  Col, 
-  Card, 
-  Button, 
-  Form, 
+import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Form,
   Pagination,
   Badge,
   Alert,
-  Spinner
+  Spinner,
 } from '@openedx/paragon';
 import { Search, Visibility, ArrowLeft } from '@openedx/paragon/icons';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { getConfig } from '@edx/frontend-platform';
-import messages from '../messages';
 import CourseUnitDetailModal from './CourseUnitDetailModal';
 
 const CourseUnits = ({ courseId }) => {
-  const { formatMessage } = useIntl();
   const [units, setUnits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,17 +28,11 @@ const CourseUnits = ({ courseId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const itemsPerPage = 4;
 
-  useEffect(() => {
-    if (courseId) {
-      fetchCourseUnits();
-    }
-  }, [courseId, currentPage]);
-
-  const fetchCourseUnits = async () => {
+  const fetchCourseUnits = useCallback(async () => {
     try {
       setLoading(true);
       const client = getAuthenticatedHttpClient();
-      
+
       // API call to get course units/sections
       const response = await client.get(
         `${getConfig().LMS_BASE_URL}/api/courses/v2/course_units/`,
@@ -49,93 +41,27 @@ const CourseUnits = ({ courseId }) => {
             course_id: courseId,
             page: currentPage,
             page_size: itemsPerPage,
-            search: searchTerm
-          }
-        }
+            search: searchTerm,
+          },
+        },
       );
-      
+
       if (response.data) {
         setUnits(response.data.results || []);
         setTotalPages(Math.ceil((response.data.count || 0) / itemsPerPage));
       }
     } catch (err) {
-      console.error('Error fetching course units:', err);
       setError('Không thể tải danh sách lớp học. Vui lòng thử lại sau.');
-      
-      // Fallback: Create sample data structure for development
-      const sampleUnits = [
-        {
-          id: 1,
-          title: 'Lập trình Nodejs từ zero tới master dành cho người mới bắt đầu',
-          start_date: '2025-10-08T00:00:00Z',
-          startDate: '20/10/2025',
-          status: 'completed',
-          status_display: 'Đã kết thúc',
-          course_key: 'course-v1:Chalix+NodeJS+2025_T1',
-          section_number: 1,
-          enrollment_count: 150,
-          completion_rate: 85.5,
-          testScore: '68/100',
-          interactions: '20',
-          evaluation: 'ĐẠT',
-          progress: 68
-        },
-        {
-          id: 2,
-          title: 'React Development Fundamentals',
-          start_date: '2025-09-15T00:00:00Z',
-          startDate: '15/09/2025',
-          status: 'in_progress',
-          status_display: 'Đang diễn ra',
-          course_key: 'course-v1:Chalix+React+2025_T2',
-          section_number: 2,
-          enrollment_count: 120,
-          completion_rate: 72.3,
-          testScore: '75/100',
-          interactions: '35',
-          evaluation: 'ĐẠT',
-          progress: 72
-        },
-        {
-          id: 3,
-          title: 'Python cho người mới bắt đầu',
-          start_date: '2025-08-20T00:00:00Z',
-          startDate: '20/08/2025',
-          status: 'completed',
-          status_display: 'Đã kết thúc',
-          course_key: 'course-v1:Chalix+Python+2025_T3',
-          section_number: 3,
-          enrollment_count: 200,
-          completion_rate: 92.1,
-          testScore: '88/100',
-          interactions: '42',
-          evaluation: 'ĐẠT',
-          progress: 92
-        },
-        {
-          id: 4,
-          title: 'Database Design and Management',
-          start_date: '2025-11-01T00:00:00Z',
-          startDate: '01/11/2025',
-          status: 'upcoming',
-          status_display: 'Sắp diễn ra',
-          course_key: 'course-v1:Chalix+DB+2025_T4',
-          section_number: 4,
-          enrollment_count: 0,
-          completion_rate: 0,
-          testScore: '0/100',
-          interactions: '0',
-          evaluation: 'CHƯA ĐÁNH GIÁ',
-          progress: 0
-        }
-      ];
-      
-      setUnits(sampleUnits);
-      setTotalPages(Math.ceil(sampleUnits.length / itemsPerPage));
     } finally {
       setLoading(false);
     }
-  };
+  }, [courseId, currentPage, searchTerm, itemsPerPage]);
+
+  useEffect(() => {
+    if (courseId) {
+      fetchCourseUnits();
+    }
+  }, [courseId, currentPage, fetchCourseUnits]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -160,13 +86,11 @@ const CourseUnits = ({ courseId }) => {
     }
   };
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('vi-VN', {
-      day: '2-digit',
-      month: '2-digit', 
-      year: 'numeric'
-    });
-  };
+  const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
 
   const handleViewDetails = (unit) => {
     // Open modal with unit details
@@ -246,7 +170,7 @@ const CourseUnits = ({ courseId }) => {
                           paddingRight: '50px',
                           fontFamily: 'Roboto, sans-serif',
                           fontSize: '16px',
-                          letterSpacing: '0.5px'
+                          letterSpacing: '0.5px',
                         }}
                       />
                       <Button
@@ -259,7 +183,7 @@ const CourseUnits = ({ courseId }) => {
                           transform: 'translateY(-50%)',
                           zIndex: 10,
                           border: 'none',
-                          background: 'transparent'
+                          background: 'transparent',
                         }}
                       >
                         <Search size="20" />
@@ -275,11 +199,11 @@ const CourseUnits = ({ courseId }) => {
                       <Card 
                         key={unit.id} 
                         className="mb-3 course-unit-item"
-                        style={{ 
+                        style={{
                           backgroundColor: 'rgba(178,178,178,0.3)',
                           border: '1px solid #9b9595',
                           borderRadius: '5px',
-                          minHeight: '111px'
+                          minHeight: '111px',
                         }}
                       >
                         <Card.Body className="py-3">
@@ -309,7 +233,7 @@ const CourseUnits = ({ courseId }) => {
                                 {unit.enrollment_count > 0 && (
                                   <div className="text-muted">
                                     <small>
-                                      Số học viên: {unit.enrollment_count} | 
+                                      Số học viên: {unit.enrollment_count} |
                                       Tỷ lệ hoàn thành: {unit.completion_rate}%
                                     </small>
                                   </div>
@@ -327,7 +251,7 @@ const CourseUnits = ({ courseId }) => {
                                   borderColor: '#00aaed',
                                   borderRadius: '8px',
                                   padding: '12px 16px',
-                                  fontSize: '16px'
+                                  fontSize: '16px',
                                 }}
                               >
                                 Xem chi tiết
@@ -357,11 +281,10 @@ const CourseUnits = ({ courseId }) => {
                       {[...Array(totalPages)].map((_, index) => {
                         const page = index + 1;
                         
-                        // Show first page, last page, current page and pages around it
                         if (
-                          page === 1 ||
-                          page === totalPages ||
-                          (page >= currentPage - 1 && page <= currentPage + 1)
+                          page === 1
+                          || page === totalPages
+                          || (page >= currentPage - 1 && page <= currentPage + 1)
                         ) {
                           return (
                             <Pagination.Item
@@ -372,9 +295,10 @@ const CourseUnits = ({ courseId }) => {
                               {page}
                             </Pagination.Item>
                           );
-                        } else if (
-                          page === currentPage - 2 ||
-                          page === currentPage + 2
+                        }
+                        if (
+                          page === currentPage - 2
+                          || page === currentPage + 2
                         ) {
                           return <Pagination.Ellipsis key={page} />;
                         }
@@ -402,6 +326,10 @@ const CourseUnits = ({ courseId }) => {
       />
     </div>
   );
+};
+
+CourseUnits.propTypes = {
+  courseId: PropTypes.string.isRequired,
 };
 
 export default CourseUnits;
