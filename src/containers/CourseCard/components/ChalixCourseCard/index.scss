@@ -27,7 +27,10 @@
     border-radius: 5px;
     overflow: hidden;
     transition: all 0.3s ease;
-    height: 255px;
+    /* Allow the card to grow if inner content needs more space. Using min-height
+         prevents internal elements from overflowing the card and being clipped or
+         overlapping other cards in the grid. */
+    min-height: 255px;
     display: flex;
     flex-direction: column;
     cursor: pointer;

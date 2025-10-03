@@ -27,7 +27,8 @@ export const useDashboardMessages = () => {
 export const useDashboardLayoutData = () => {
   const { width } = useWindowSize();
 
-  const [sidebarShowing, setSidebarShowing] = module.state.sidebarShowing(true);
+  // Default sidebar hidden to give the course list full width unless explicitly enabled
+  const [sidebarShowing, setSidebarShowing] = module.state.sidebarShowing(false);
   return {
     isDashboardCollapsed: width < breakpoints.large.maxWidth,
     sidebarShowing,

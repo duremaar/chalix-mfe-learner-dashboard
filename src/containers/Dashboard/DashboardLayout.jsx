@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Container, Col, Row } from '@openedx/paragon';
 
-import WidgetSidebarSlot from 'plugin-slots/WidgetSidebarSlot';
+// Sidebar plugin slot removed — courses now occupy full width by default.
 
 import hooks from './hooks';
 
@@ -30,18 +30,12 @@ export const DashboardLayout = ({ children }) => {
     sidebarShowing,
   } = hooks.useDashboardLayoutData();
 
-  const courseListColumnProps = sidebarShowing
-    ? columnConfig.courseList.withSidebar
-    : columnConfig.courseList.noSidebar;
-
+  // Sidebar removed: always render the course list as full-width
   return (
     <Container fluid size="xl">
       <Row>
-        <Col {...courseListColumnProps} className="course-list-column">
+        <Col {...columnConfig.courseList.noSidebar} className="course-list-column">
           {children}
-        </Col>
-        <Col {...columnConfig.sidebar} className={['sidebar-column', !isCollapsed && 'not-collapsed']}>
-          <WidgetSidebarSlot />
         </Col>
       </Row>
     </Container>
