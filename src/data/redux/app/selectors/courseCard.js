@@ -42,7 +42,12 @@ export const courseCard = StrictDict({
     cardSimpleSelectors.courseRun,
     (courseRun) => (courseRun === null ? {} : {
       endDate: module.loadDateVal(courseRun.endDate),
-      startDate: module.loadDateVal(courseRun.startDate),
+      // The backend may return start date under different keys depending on the API
+      // (startDate, start, effective_start, start_date). Prefer explicit startDate
+      // then fall back to other common fields.
+      startDate: module.loadDateVal(
+        courseRun.startDate || courseRun.start || courseRun.effective_start || courseRun.start_date || null,
+      ),
       advertisedStart: courseRun.advertisedStart,
 
       courseId: courseRun.courseId,
