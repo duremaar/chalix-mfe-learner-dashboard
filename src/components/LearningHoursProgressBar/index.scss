@@ -2,11 +2,19 @@
     margin-bottom: 1.5rem;
 
     .learning-hours-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.5rem 1rem;
+        position: relative; // for absolutely-positioned badge
+
         .learning-hours-stats {
             display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            margin-bottom: 0.75rem;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
 
             .stat-item {
                 display: flex;
@@ -16,6 +24,7 @@
                 .stat-label {
                     color: #000;
                     font-weight: 500;
+                    margin-right: 0.25rem;
                 }
 
                 .stat-value {
@@ -26,12 +35,14 @@
         }
 
         .progress-container {
-            margin: 0.75rem 0;
+            margin: 0.5rem 0 0.75rem 0;
+            width: 100%;
 
             .learning-progress-bar {
                 border-radius: 3px;
                 overflow: hidden;
                 background-color: #b2b2b2;
+                width: 100%;
 
                 .progress-bar {
                     background-color: #3494c8;
@@ -53,14 +64,17 @@
         }
 
         .status-section {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 0.5rem;
+            /* float the status badge to the right of the progress bar; anchor to bottom so
+               it stays near the bar when padding/gap change */
+            position: absolute;
+            right: 1rem;
+            bottom: 0.9rem;
 
             .status-badge {
-                font-size: 16px;
+                font-size: 15px;
                 font-weight: 500;
-                border-radius: 4px;
+                border-radius: 6px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 
                 .status-text {
                     font-size: inherit;
@@ -103,7 +117,7 @@
     background: white;
 
     .card-body {
-        padding: 1rem 1.5rem;
+        padding: 0.5rem 1rem; // slightly reduced so inner .learning-hours-content padding is balanced
     }
 
     .learning-hours-stats .stat-item .stat-label {

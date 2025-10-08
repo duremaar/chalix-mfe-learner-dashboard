@@ -17,11 +17,33 @@ export const ChalixCourseCard = ({ cardId }) => {
   const { courseNumber } = reduxHooks.useCardCourseData(cardId);
   const execEdTrackingParam = reduxHooks.useCardExecEdTrackingParam(cardId);
   
-  // Calculate progress data (simplified - in real implementation, this would come from API)
+  // Compute progress data from redux-provided selectors when available.
+  // Prefer an explicit progress percentage (if provided by backend),
+  // otherwise fall back to grade-based or course completion heuristics.
+  const cardProgress = reduxHooks.useCardGradeData(cardId) || {};
+  // Some backend payloads/other modules (e.g., personalized learning) use progress_percentage.
+  // Try to read from courseRun or enrollment objects where available.
+  const { progress_percentage: runProgress } = reduxHooks.useCardCourseData(cardId) || {};
+  const { progress_percentage: enrollmentProgress } = reduxHooks.useCardEnrollmentData(cardId) || {};
+
+  let percentage = null;
+  if (typeof runProgress === 'number') {
+    percentage = Math.round(runProgress);
+  } else if (typeof enrollmentProgress === 'number') {
+    percentage = Math.round(enrollmentProgress);
+  } else if (typeof cardProgress?.progressPercentage === 'number') {
+    percentage = Math.round(cardProgress.progressPercentage);
+  } else if (typeof cardProgress?.isPassing === 'boolean') {
+    // If only grade/pass info exists, show 100 for passing, 0 for not passing, else null.
+    percentage = cardProgress.isPassing ? 100 : 0;
+  }
+
   const progressData = {
-    percentage: Math.round(Math.random() * 100), // Mock data - replace with real progress API
-    completedUnits: Math.floor(Math.random() * 15) + 1,
-    totalUnits: Math.floor(Math.random() * 10) + 15,
+    percentage: percentage != null ? Math.min(Math.max(percentage, 0), 100) : 0,
+    // completed/totalUnits not currently provided in this MFE's course-card selectors;
+    // keep them undefined so UI can hide or ignore if not needed.
+    completedUnits: undefined,
+    totalUnits: undefined,
   };
 
   // Check if user is instructor (simplified - in real implementation, this would come from API)
