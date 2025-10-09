@@ -1,13 +1,103 @@
-#no-courses-content-view {
-  border: 2px solid var(--pgn-color-light-400);
-  flex-direction: column;
-  padding-bottom: var(--pgn-spacing-spacer-5);
-  padding-top: var(--pgn-spacing-spacer-5);
-  height: 100%;
+.chalix-no-courses-view {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 48px 32px;
+  margin: 0 auto;
+  max-width: 600px;
+  text-align: center;
+}
 
-  & > * {
-    margin-top: var(--pgn-spacing-spacer-3);
-    margin-bottom: var(--pgn-spacing-spacer-3);
+.empty-state-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.empty-state-image {
+  width: 120px;
+  height: 120px;
+  opacity: 0.8;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
 
+.empty-state-text {
+  max-width: 400px;
+}
+
+.empty-state-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+}
+
+.empty-state-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #7f8c8d;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.empty-state-action {
+  margin-top: 8px;
+}
+
+.explore-courses-btn {
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  text-decoration: none !important;
+  box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(135deg, #357abd 0%, #2a5f8f 100%) !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+@media (max-width: 768px) {
+  .chalix-no-courses-view {
+    padding: 32px 24px;
+    margin: 16px;
+  }
+
+  .empty-state-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .empty-state-title {
+    font-size: 20px;
+  }
+
+  .empty-state-description {
+    font-size: 15px;
+  }
+
+  .explore-courses-btn {
+    padding: 10px 24px;
+    font-size: 15px;
+  }
+}

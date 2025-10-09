@@ -94,29 +94,43 @@ export const ChalixCourseCard = ({ cardId }) => {
         </div>
         
         <Card.Body className="chalix-course-content">
-          <div className="chalix-course-title">
-            <CourseCardTitle cardId={cardId} />
+          <div className="chalix-course-header">
+            <div className="chalix-course-title">
+              <CourseCardTitle cardId={cardId} />
+            </div>
           </div>
           
-          <div className="chalix-course-details">
-            <CourseCardDetails cardId={cardId} />
-          </div>
-          
-          <div className="chalix-progress-section">
+          <div className="chalix-course-body">
+            <div className="chalix-course-details">
+              <CourseCardDetails cardId={cardId} />
+            </div>
+            
+            <div className="chalix-progress-section">
+            <div className="chalix-progress-header">
+              <div className="chalix-progress-percentage">
+                {progressData.percentage}% hoàn thành
+              </div>
+              {progressData.completedUnits && progressData.totalUnits && (
+                <div className="chalix-unit-count">
+                  {progressData.completedUnits}/{progressData.totalUnits} bài học
+                </div>
+              )}
+            </div>
             <div className="chalix-progress-bar-container">
               <div className="chalix-progress-bar-track">
                 <div 
                   className="chalix-progress-bar-fill"
                   style={{ width: `${progressData.percentage}%` }}
-                  aria-label={`Progress: ${progressData.percentage}%`}
+                  aria-label={`Tiến độ: ${progressData.percentage}%`}
                 />
               </div>
             </div>
+            
+            <Card.Footer className="chalix-course-actions">
+              <CourseCardActions cardId={cardId} />
+            </Card.Footer>
           </div>
-          
-          <Card.Footer className="chalix-course-actions">
-            <CourseCardActions cardId={cardId} />
-          </Card.Footer>
+        </div>
         </Card.Body>
         
         <CourseCardBanners cardId={cardId} />

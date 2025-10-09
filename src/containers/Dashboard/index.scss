@@ -1,42 +1,178 @@
-// Dashboard Navigation Styles
-.dashboard-navigation {
-  .nav-tabs {
-    border-bottom: 2px solid #e9ecef;
+// Modern Dashboard Layout
+.dashboard-main-container {
+  background: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-body {
+  flex: 1;
+  padding: 0 24px 24px 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dashboard-content {
+  flex: 1;
+}
+
+// Progress Container - In-body positioning
+.in-body-progress-container {
+  background: white;
+  padding: 20px 24px;
+  margin: 16px 0 24px 0;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e9ecef;
+}
+
+.progress-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-family: 'Inter', sans-serif;
+}
+
+.progress-label {
+  color: #6c757d;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.progress-total {
+  color: #2c3e50;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.progress-bar-wrapper {
+  width: 100%;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #3494c8;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+// Course Category Navigation
+.course-category-navigation {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  padding: 0;
+  margin: 8px 0 18px 0;
+  overflow: hidden;
+
+  // Force blue background for active tabs
+  .nav-tabs .nav-item .nav-link.active-tab,
+  .nav-tabs .nav-item .nav-link.active,
+  .nav-tabs .nav-item .nav-link[aria-selected="true"] {
+    background: #3494c8 !important;
+    background-color: #3494c8 !important;
+    color: #ffffff !important;
+    border-bottom-color: #3494c8 !important;
+  }
+
+  .course-tabs {
+    border-bottom: none;
     margin-bottom: 0;
+    display: flex;
+    width: 100%;
+    height: auto;
 
     .nav-item {
-      margin-bottom: -2px;
+      flex: 1;
+      margin-bottom: 0;
+      position: relative;
 
       .nav-link {
         border: none;
-        border-bottom: 3px solid transparent;
+        border-radius: 0;
         color: #6c757d;
         font-weight: 500;
-        padding: 12px 24px;
-        border-radius: 0;
+        font-size: 14px;
+        padding: 16px 12px;
+        margin: 0;
         transition: all 0.3s ease;
         text-decoration: none;
-        background: transparent;
+        background: #f8f9fa;
+        text-align: center;
+        border-bottom: 3px solid transparent;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        height: 100%;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
 
         &:hover {
-          color: #007bff;
-          background: rgba(0, 123, 255, 0.05);
-          border-color: transparent;
+          color: #3494c8;
+          background: rgba(52, 148, 200, 0.1);
         }
 
-        &.active {
-          color: #007bff;
-          background: transparent;
-          border-bottom-color: #007bff;
-          font-weight: 600;
+        &.active-tab,
+        &.active,
+        &[aria-selected="true"] {
+          color: #ffffff !important;
+          background: #3494c8 !important;
+          background-color: #3494c8 !important;
+          font-weight: 700 !important;
+          border-bottom-color: #3494c8 !important;
+        }
+
+        &:first-child {
+          border-radius: 12px 0 0 12px;
+        }
+
+        &:last-child {
+          border-radius: 0 12px 12px 0;
         }
       }
+    }
+
+    // Additional overrides for Paragon Nav component
+    .nav-link.active,
+    .nav-link[aria-selected="true"],
+    .nav-item .nav-link.active-tab {
+      background: #3494c8 !important;
+      background-color: #3494c8 !important;
+      color: #ffffff !important;
+      border-color: #3494c8 !important;
+    }
+
+    // Override any Paragon default active states
+    .nav-tabs .nav-link.active,
+    .nav-tabs .nav-item.show .nav-link {
+      background: #3494c8 !important;
+      background-color: #3494c8 !important;
+      color: #ffffff !important;
+      border-color: #3494c8 !important;
     }
   }
 }
 
 .course-list-column {
-  padding: 0 var(--pgn-spacing-spacer-4);
+  padding: 0;
 }
 
 .sidebar-column {
@@ -51,23 +187,82 @@
   }
 }
 
-@media (--pgn-size-breakpoint-max-width-lg) {
-  .sidebar-column {
+@media (max-width: 768px) {
+  .dashboard-body {
+    padding: 0 16px 16px 16px;
+  }
 
-    // grid are inheriting dir="ltr" from the body, so we need to override it
-    [dir=ltr] & {
-      padding: 0 var(--pgn-spacing-spacer-3);
-    }
+  .progress-container {
+    padding: 16px 16px;
+  }
 
-    [dir=rtl] & {
-      padding: 0 var(--pgn-spacing-spacer-3);
+  .progress-stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .progress-label,
+  .progress-total {
+    font-size: 13px;
+  }
+
+  .course-category-navigation {
+    margin: 16px 0;
+
+    .course-tabs {
+      flex-direction: column;
+
+      .nav-item {
+        flex: none;
+
+        .nav-link {
+          padding: 12px 16px;
+          font-size: 13px;
+          text-align: left;
+          border-radius: 0 !important;
+
+          &:first-child {
+            border-radius: 12px 12px 0 0 !important;
+          }
+
+          &:last-child {
+            border-radius: 0 0 12px 12px !important;
+          }
+        }
+      }
     }
   }
 
-  .dashboard-navigation {
-    .nav-tabs .nav-item .nav-link {
-      padding: 10px 16px;
-      font-size: 0.9rem;
+  .sidebar-column {
+    padding: 0 var(--pgn-spacing-spacer-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-body {
+    padding: 0 8px 8px 8px;
+  }
+
+  .progress-container {
+    padding: 12px 8px;
+  }
+
+  .course-category-navigation {
+    border-radius: 8px;
+
+    .course-tabs .nav-item .nav-link {
+      font-size: 12px;
+      padding: 10px 12px;
+
+      &:first-child {
+        border-radius: 8px 8px 0 0 !important;
+      }
+
+      &:last-child {
+        border-radius: 0 0 8px 8px !important;
+      }
     }
   }
 }

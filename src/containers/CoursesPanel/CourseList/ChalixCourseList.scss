@@ -1,20 +1,32 @@
-/* Chalix Course List Grid Styles */
+/* Modern Course List Layout */
 
 .chalix-course-list-container {
     width: 100%;
+    padding: 0;
+    background: transparent;
+    min-height: 400px;
+    margin: 0;
 }
 
 .chalix-course-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px 28px;
     list-style: none;
     padding: 0;
     margin: 0;
     width: 100%;
+    justify-items: stretch;
 }
 
 /* Responsive adjustments */
+@media (max-width: 1200px) {
+    .chalix-course-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
 @media (max-width: 768px) {
     .chalix-course-grid {
         grid-template-columns: 1fr;

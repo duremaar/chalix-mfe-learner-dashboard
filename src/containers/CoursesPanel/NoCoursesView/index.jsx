@@ -14,25 +14,31 @@ export const NoCoursesView = () => {
   const { formatMessage } = useIntl();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   return (
-    <div
-      id="no-courses-content-view"
-      className="d-flex align-items-center justify-content-center mb-4.5"
-    >
-      <Image src={emptyCourseSVG} alt={formatMessage(messages.bannerAlt)} />
-      <h3 className="h1">
-        {formatMessage(messages.lookingForChallengePrompt)}
-      </h3>
-      <p>
-        {formatMessage(messages.exploreCoursesPrompt)}
-      </p>
-      <Button
-        variant="brand"
-        as="a"
-        href={baseAppUrl(courseSearchUrl)}
-        iconBefore={Search}
-      >
-        {formatMessage(messages.exploreCoursesButton)}
-      </Button>
+    <div className="chalix-no-courses-view">
+      <div className="empty-state-content">
+        <div className="empty-state-image">
+          <Image src={emptyCourseSVG} alt={formatMessage(messages.bannerAlt)} />
+        </div>
+        <div className="empty-state-text">
+          <h3 className="empty-state-title">
+            {formatMessage(messages.lookingForChallengePrompt)}
+          </h3>
+          <p className="empty-state-description">
+            {formatMessage(messages.exploreCoursesPrompt)}
+          </p>
+        </div>
+        <div className="empty-state-action">
+          <Button
+            variant="primary"
+            as="a"
+            href={baseAppUrl(courseSearchUrl)}
+            iconBefore={Search}
+            className="explore-courses-btn"
+          >
+            {formatMessage(messages.exploreCoursesButton)}
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,20 +1,81 @@
+.chalix-course-list-container {
+  background: transparent;
+  min-height: 400px;
+  padding: 0;
+}
+
 .course-list-heading-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 16px;
+  background: white;
+  padding: 18px 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+}
+
+.heading-content {
+  flex: 1;
 }
 
 .course-list-title {
-  font-size: var(--pgn-typography-font-size-h2-base);
-  margin: var(--pgn-spacing-spacer-3) 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.course-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Inter', sans-serif;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-label {
+  color: #7f8c8d;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.stat-value {
+  color: #2c3e50;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.stat-separator {
+  color: #bdc3c7;
+  font-size: 14px;
+}
+
+.course-content-area {
+  flex: 1;
+  min-height: 400px;
+}
+
+.course-content-area>.chalix-course-list-container {
+  margin-top: 12px;
 }
 
 .course-list-loading {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 400px;
+  background: white;
+  border-radius: 12px;
+  margin: 24px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .course-filter-controls-container {
@@ -22,19 +83,45 @@
   align-self: center;
 }
 
-@media (--pgn-size-breakpoint-max-width-md) {
+@media (max-width: 768px) {
+  .chalix-course-list-container {
+    padding: 8px;
+  }
+
   .course-list-heading-container {
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: flex-start;
+    padding: 16px 20px;
+    margin-bottom: 16px;
   }
 
   .course-filter-controls-container {
     text-align: left;
     align-self: flex-start;
+    margin-top: 16px;
+    width: 100%;
   }
 
   .course-list-title {
-    font-size: var(--pgn-typography-font-size-h3-base);
-    margin: var(--pgn-spacing-spacer-2) 0;
+    font-size: 24px;
+    margin: 0 0 8px 0;
+  }
+
+  .course-stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .stat-separator {
+    display: none;
+  }
+
+  .stat-label {
+    font-size: 13px;
+  }
+
+  .stat-value {
+    font-size: 15px;
   }
 }
