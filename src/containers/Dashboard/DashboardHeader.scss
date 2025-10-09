@@ -70,6 +70,9 @@ header.dashboard-header {
     width: 36px !important;
     height: 36px !important;
     padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     transition: all 0.3s ease;
 
     &:hover,
@@ -83,6 +86,9 @@ header.dashboard-header {
     .pgn__icon {
         width: 18px;
         height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 
@@ -108,10 +114,16 @@ header.dashboard-header {
     .notification-btn {
         width: 32px !important;
         height: 32px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
 
         .pgn__icon {
             width: 16px;
             height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 }
@@ -123,5 +135,42 @@ header.dashboard-header {
 
     .user-name {
         display: none;
+    }
+}
+
+/* Extra centering fixes: ensure SVG icons are block-level and buttons force center alignment
+   This addresses icon baseline/line-height quirks from the Paragon Icon wrapper. */
+.user-profile-btn,
+.notification-btn {
+    /* reinforce flex centering and remove any line-height that can offset inline SVGs */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 0 !important;
+}
+
+.user-profile-btn .pgn__icon,
+.notification-btn .pgn__icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 0 !important;
+    margin: 0 !important;
+}
+
+.user-profile-btn .pgn__icon svg,
+.notification-btn .pgn__icon svg {
+    /* make the svg a block so vertical-align / baseline don't shift it */
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+@media (max-width: 768px) {
+
+    .user-profile-btn .pgn__icon svg,
+    .notification-btn .pgn__icon svg {
+        width: 16px !important;
+        height: 16px !important;
     }
 }
