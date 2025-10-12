@@ -96,7 +96,7 @@ export const Dashboard = () => {
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="elective" className={activeTab === 'elective' ? 'active-tab' : ''}>
-                  Khóa học tuy chọn
+                  Khóa học của CC,VC Bộ
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>

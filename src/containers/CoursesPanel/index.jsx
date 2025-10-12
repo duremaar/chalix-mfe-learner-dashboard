@@ -39,7 +39,7 @@ export const CoursesPanel = ({ activeCategory = 'ai-suggested' }) => {
       case 'internal':
         return 'Khóa học nội bộ cơ quan';
       case 'elective':
-        return 'Khóa học tuy chọn';
+        return '“Khóa học của CC,VC Bộ';
       case 'required':
         return 'Khóa học bắt buộc';
       case 'teaching':
